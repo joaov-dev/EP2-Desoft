@@ -17,3 +17,13 @@ def haversine (r, p1, l1, p2, l2):
     d= 2 * r * math.asin(dt**(1/2))
 
     return d
+
+
+
+def normaliza(dic):
+    d = {}
+    for cont in dic:
+        for pais in dic[cont]:
+            d[pais] = dic[cont][pais]
+            d[pais]['continente'] = cont
+    return d
