@@ -27,3 +27,11 @@ def normaliza(dic):
             d[pais] = dic[cont][pais]
             d[pais]['continente'] = cont
     return d
+
+
+def sorteia_pais(dic):
+    nl = []
+    for pais in dic:
+        nl.append(pais)
+
+    return random.choice(nl)
