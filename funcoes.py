@@ -35,3 +35,48 @@ def sorteia_pais(dic):
         nl.append(pais)
 
     return random.choice(nl)
+
+def adiciona_em_ordem(nome, dist, lista):
+    i = 0
+    nl = [nome, dist]
+    
+    if nl not in lista:
+        if len(lista) != 0:
+            while i<len(lista):
+                if lista[i][1] < dist:
+                    i+=1
+                else:
+                    lista.insert(i, nl)
+                    break
+        else:
+            lista.append(nl)
+
+    return lista
+
+def esta_na_lista(nome, lista):
+    nl = []
+    for pais in lista:
+        nl.append(pais[0])
+    
+    check = False
+    if nome in nl:
+        check = True
+    
+    return check
+
+def sorteia_letra(palavra,lista):
+    l = []
+    cEspecial = ['.', ',', '-', ';', ' ']
+    a = palavra. lower()
+    for i in range(len(a)):
+        l. append (a[i])
+    letraAleatoria = random. choice(l)
+    todosIguais = True
+    for i in a:
+        if i not in lista and i not in cEspecial:
+            todosIguais = False
+    if todosIguais == True:
+        return ''
+    while letraAleatoria in lista or letraAleatoria in cEspecial:
+        letraAleatoria = random. choice(l)
+    return letraAleatoria
