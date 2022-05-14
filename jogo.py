@@ -20,8 +20,29 @@ entraPais = input('Escolha um pais para comecar: ')
 
 while continuaJogo == True:
     while entraPais != paisSorteado:
+        if entraPais == 'dica':
+            print('----------------------------------------')
+            print('1. Cor da Bandeira  - Custa 4 tentativas')
+            print('2. Letra da Capital - Custa 3 tentativas')
+            print('3. Area             - Custa 6 tentativas')
+            print('4. Populacao        - Custa 5 tentativas')
+            print('5. Continente       - Custa 7 tentativas')
+            print('0. Sem dica')
+            print('----------------------------------------')
 
-        if:
+            dicaEscolhida = input('Escolha sua opcao [0|1|2|3|4|5]: ')
+            respostaDica = dicas.compraDicas(dicaEscolhida, paisSorteado, tentativas)
+            print(respostaDica[0])
+
+            if dicaEscolhida == '1':
+                coresUsadas.append(respostaDica[0])
+                coresSorteadas = respostaDica[2]
+
+            tentativas -= respostaDica[1]
+
+            print('Voce tem {} tentativas restantes!'.format(tentativas))
+            entraPais = input('Escolha mais um pais: ')
+        else:
             if entraPais in dic_normalizado.keys():
                 if entraPais not in listaChutes:
                     if tentativas > 0:
@@ -33,7 +54,7 @@ while continuaJogo == True:
 
                         print('\nErrou, o pais secreto esta a: {:.2f}'.format(dist))
                         
-                           
+                            
                     else:
                         print('\nVoce perdeu! o pais secreto era: {0}'.format(paisSorteado))
 
@@ -46,3 +67,23 @@ while continuaJogo == True:
                 print('\nEste pais nao existe, ou nao esta em nosso banco de dados!')
                 
                 entraPais = input('Escolha mais um pais: ')
+
+    if entraPais == paisSorteado:
+        print('\nVoce acertou! o pais era: {} '.format(paisSorteado))
+
+        jogarNovamente = input('Deseja jogar novamente? [s | n]: ')
+        if jogarNovamente == 's':
+            
+            tentativas = 20
+            listaTentivas = []
+            listaChutes = []
+            paisSorteado = sorteia_pais(dic_normalizado)
+            entraPais = input('\nEscolha um pais: ')
+
+        elif jogarNovamente == 'n':
+            print('Obrigado por jogar!')
+            continuaJogo = False
+
+        else:
+            print('Resposta invalida, tente novamente.')
+            jogarNovamente = input('Deseja jogar novamente? [s | n]: ')
