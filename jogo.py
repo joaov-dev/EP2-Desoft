@@ -12,6 +12,7 @@ mostraChutes= []
 continuaJogo = True
 
 coresUsadas = []
+coresSorteadas = []
 
 paisSorteado = sorteia_pais(dic_normalizado)
 entraPais = input('Escolha um pais para comecar: ')
@@ -31,3 +32,17 @@ while continuaJogo == True:
                         mostraChutes = adiciona_em_ordem(entraPais, dist, mostraChutes)
 
                         print('\nErrou, o pais secreto esta a: {:.2f}'.format(dist))
+                        
+                           
+                    else:
+                        print('\nVoce perdeu! o pais secreto era: {0}'.format(paisSorteado))
+
+
+                else:
+                    print('\nVoce ja chutou esse pais!')
+
+                    entraPais = input('Escolha outro pais: ')
+            else:
+                print('\nEste pais nao existe, ou nao esta em nosso banco de dados!')
+                
+                entraPais = input('Escolha mais um pais: ')
