@@ -30,13 +30,13 @@ area = ''
 populacao = ''
 continente = ''
 
-print ("   ================================================   ")
-print ("  /                                                \  ")
-print (" /                                                  \ ")
-print ("|                   descubra o país                  |")
-print (" \                                                  / ")
-print ("  \                                                /  ")
-print ("   ================================================   ")
+print ("  ================================================   ")
+print (" /                                                \  ")
+print ("/                                                  \ ")
+print ("|                  descubra o país                 | ")
+print ("\                                                  /  ")
+print (" \                                                /   ")
+print ("  ================================================   ")
 
 print ("\nComandos: ")
 print ('     dica       - Entra no mercado de dicas' )
@@ -47,7 +47,7 @@ print ('\nVocê tem ' + azul + '20' + reset + ' tentativas')
        
 
 paisSorteado = sorteia_pais(dic_normalizado)
-entraPais = input('Escolha um pais para comecar: ')
+entraPais = input('\nEscolha um pais para comecar: ')
 
 
 while continuaJogo == True:
@@ -73,27 +73,33 @@ while continuaJogo == True:
             print('0. Sem dica')
             print('----------------------------------------')
 
-            dicaEscolhida = input('Escolha sua opcao [0|1|2|3|4|5]: ')
-            if dicaEscolhida != '0':
+            dicaEscolhida = int(input('Escolha sua opcao [0|1|2|3|4|5]: '))
+
+            range = [0, 1, 2, 3, 4, 5]
+            while dicaEscolhida not in range:
+                print('\n Opcao invalida!')
+                dicaEscolhida = int(input('Escolha sua opcao [0|1|2|3|4|5]: '))
+
+            if dicaEscolhida != 0:
                 respostaDica = dicas.compraDicas(dicaEscolhida, paisSorteado, tentativas, letrasUsadas)
                 print("Aqui esta sua resposta: {}".format(respostaDica[0]))
 
-                if dicaEscolhida == '1':
+                if dicaEscolhida == 1:
                     coresUsadas.append(respostaDica[0])
                     bandeiraAdquirida.append(respostaDica[0])
                     acabouCores = respostaDica[2]
                 
-                if dicaEscolhida == '2':
+                if dicaEscolhida == 2:
                     letrasUsadas.append(respostaDica[0])
                     capitalAdquirida.append(respostaDica[0])
 
-                if dicaEscolhida == '3':
+                if dicaEscolhida == 3:
                     dicasUsadas.append(dicaEscolhida)
                     area = respostaDica[0]
-                if dicaEscolhida == '4':
+                if dicaEscolhida == 4:
                     dicasUsadas.append(dicaEscolhida)
                     populacao = respostaDica[0]
-                if dicaEscolhida == '5':
+                if dicaEscolhida == 5:
                     dicasUsadas.append(dicaEscolhida)
                     continente = respostaDica[0]
 
@@ -115,11 +121,73 @@ while continuaJogo == True:
 
                 tentativas -= respostaDica[1]
                 
-
-                print('\nVoce tem {} tentativas restantes!'.format(tentativas))
+                if tentativas > 10:
+                    print('\nVoce tem ' + azul + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
+                if tentativas > 5 and tentativas <= 10:
+                    print('\nVoce tem ' + verde + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
+                if tentativas <= 5:
+                    print('\nVoce tem ' + vermelho + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
                 entraPais = input('Escolha mais um pais: ')
             else:
                 entraPais = input('Escolha mais um pais: ')
+        if entraPais == 'inventario':
+            print('\n--------------------------------- ')
+            print('Informacoes adquiridas: ')
+            for item in mostraChutes:
+                if item[1] <= 5000:
+                    print(verde + '{} --> {:.2f}'.format(item[0], item[1]))
+                if item[1] > 5000 and item[1] <= 12500:
+                    print(azul + '{} --> {:.2f}'.format(item[0], item[1]))
+                if item[1] > 12500:
+                    print(vermelho + '{} --> {:.2f}'.format(item[0], item[1]))
+
+            print(reset + '\nDicas Adquiridas: ')
+            if len(bandeiraAdquirida)>0:
+                corBandeiraString = ', '.join(bandeiraAdquirida)
+                print('Cores da Bandeira: {}'.format(corBandeiraString))
+            if len(capitalAdquirida)>0:
+                capitalString = ', '.join(capitalAdquirida)
+                print('Letras da capital: {}'.format(capitalString))
+            if area != '':
+                print('Area do Pais: {}'.format(area))
+            if populacao != '':
+                print('Populacao do pais: {}'.format(populacao))
+            if continente != '':
+                print('Continente: {}'.format(continente))
+            print('----------------------------------------')
+
+            entraPais = input('\nEscolha mais um pais: ')
+        if entraPais == 'desisto':
+            print('Que pena, o pais certo era: {}'.format(paisSorteado))
+            jogarNovamente = input('Deseja jogar novamente? [s | n]: ')
+
+            if jogarNovamente == 's':            
+                tentativas = 20
+                listaTentivas = []
+                listaChutes = []
+                mostraChutes = []
+                continuaJogo = True
+                acabouCores = False
+                coresUsadas = []
+                coresSorteadas = ["vazio"]
+                letrasUsadas = []
+                letrasSorteadas = ["vazio"]
+                dicasUsadas = []
+                bandeiraAdquirida = []
+                capitalAdquirida = []
+                area = ''
+                populacao = ''
+                continente = ''
+                paisSorteado = sorteia_pais(dic_normalizado)
+                entraPais = input('\nEscolha um pais: ')
+
+            elif jogarNovamente == 'n':
+                print('Obrigado por jogar!')
+                continuaJogo = False
+
+            else:
+                print('Resposta invalida, tente novamente.')
+                jogarNovamente = input('Deseja jogar novamente? [s | n]: ')
         else:
             if entraPais in dic_normalizado.keys():
                 if entraPais not in listaChutes:
@@ -144,7 +212,12 @@ while continuaJogo == True:
                         print(reset + '--------------------------------- ')                    
 
                         tentativas -= 1
-                        print('\nVoce tem {} tentativas restantes!'.format(tentativas))
+                        if tentativas > 10:
+                            print('\nVoce tem ' + azul + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
+                        if tentativas > 5 and tentativas <= 10:
+                            print('\nVoce tem ' + verde + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
+                        if tentativas <= 5:
+                            print('\nVoce tem ' + vermelho + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
 
                         entraPais = input('Escolha mais um pais: ')
                         
@@ -165,11 +238,23 @@ while continuaJogo == True:
         print('\nVoce acertou! o pais era: {} '.format(paisSorteado))
 
         jogarNovamente = input('Deseja jogar novamente? [s | n]: ')
-        if jogarNovamente == 's':
-            
+        if jogarNovamente == 's':            
             tentativas = 20
             listaTentivas = []
             listaChutes = []
+            mostraChutes = []
+            continuaJogo = True
+            acabouCores = False
+            coresUsadas = []
+            coresSorteadas = ["vazio"]
+            letrasUsadas = []
+            letrasSorteadas = ["vazio"]
+            dicasUsadas = []
+            bandeiraAdquirida = []
+            capitalAdquirida = []
+            area = ''
+            populacao = ''
+            continente = ''
             paisSorteado = sorteia_pais(dic_normalizado)
             entraPais = input('\nEscolha um pais: ')
 
