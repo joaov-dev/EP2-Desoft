@@ -39,17 +39,14 @@ def sorteia_pais(dic):
 def adiciona_em_ordem(nome, dist, lista):
     i = 0
     nl = [nome, dist]
-    
+    dist2 = 0
+    for pais in lista:
+        if pais[1] > dist2 and pais[1] < dist:
+            dist2 = pais[1]
+            i += 1
+
     if nl not in lista:
-        if len(lista) != 0:
-            while i<len(lista):
-                if lista[i][1] < dist:
-                    i+=1
-                else:
-                    lista.insert(i, nl)
-                    break
-        else:
-            lista.append(nl)
+        lista.insert(i, nl)
 
     return lista
 
@@ -65,18 +62,28 @@ def esta_na_lista(nome, lista):
     return check
 
 def sorteia_letra(palavra,lista):
-    l = []
-    cEspecial = ['.', ',', '-', ';', ' ']
-    a = palavra. lower()
-    for i in range(len(a)):
-        l. append (a[i])
-    letraAleatoria = random. choice(l)
-    todosIguais = True
-    for i in a:
-        if i not in lista and i not in cEspecial:
-            todosIguais = False
-    if todosIguais == True:
-        return ''
-    while letraAleatoria in lista or letraAleatoria in cEspecial:
-        letraAleatoria = random. choice(l)
-    return letraAleatoria
+    letrasDisponiveis = letras_totais(palavra, lista)
+    if len(letrasDisponiveis) == 0:
+        return ""
+    else:
+        letraAleatoria = random.choice(letrasDisponiveis)
+        return letraAleatoria
+
+
+def letras_totais(palavra, lista):
+        cEspecial = ['.', ',', '-', ';', ' ']
+        letrasDisponiveis = []
+        palavra = palavra.lower()
+        for letra in palavra:
+            if letra not in cEspecial and letra not in lista:
+                letrasDisponiveis.append(letra)
+        return letrasDisponiveis 
+
+def cores_disponiveis(cores, coresUsadas):
+    for i in cores:
+        for s in coresUsadas:
+            if s == i:
+                cores.remove(i)
+
+    return cores
+

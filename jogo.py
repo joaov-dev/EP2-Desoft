@@ -10,6 +10,7 @@ listaTentivas = []
 listaChutes = []
 mostraChutes = []
 continuaJogo = True
+acabouCores = False
 
 vermelho = '\033[31m'
 verde = '\033[32m'
@@ -17,35 +18,59 @@ azul = '\033[34m'
 reset = "\033[0;0m"
 
 coresUsadas = []
-coresSorteadas = []
+coresSorteadas = ["vazio"]
+letrasUsadas = []
+letrasSorteadas = ["vazio"]
+dicasUsadas = []
 
 paisSorteado = sorteia_pais(dic_normalizado)
 entraPais = input('Escolha um pais para comecar: ')
 
 while continuaJogo == True:
     while entraPais != paisSorteado:
+        if len(coresUsadas) == len(coresSorteadas):
+            if '1' not in dicasUsadas:
+                dicasUsadas.append('1')
+        if len(letrasUsadas) == len(letrasSorteadas):
+            if '2' not in dicasUsadas:
+                dicasUsadas.append('2')
         if entraPais == 'dica':
             print('----------------------------------------')
-            print('1. Cor da Bandeira  - Custa 4 tentativas')
-            print('2. Letra da Capital - Custa 3 tentativas')
-            print('3. Area             - Custa 6 tentativas')
-            print('4. Populacao        - Custa 5 tentativas')
-            print('5. Continente       - Custa 7 tentativas')
+            if acabouCores == False:
+                print('1. Cor da Bandeira  - Custa 4 tentativas')
+            if '2' not in dicasUsadas:
+                print('2. Letra da Capital - Custa 3 tentativas')
+            if '3' not in dicasUsadas:
+                print('3. Area             - Custa 6 tentativas')
+            if '4' not in dicasUsadas:
+                print('4. Populacao        - Custa 5 tentativas')
+            if '5' not in dicasUsadas:
+                print('5. Continente       - Custa 7 tentativas')
             print('0. Sem dica')
             print('----------------------------------------')
 
             dicaEscolhida = input('Escolha sua opcao [0|1|2|3|4|5]: ')
-            respostaDica = dicas.compraDicas(dicaEscolhida, paisSorteado, tentativas)
-            print(respostaDica[0])
+            if dicaEscolhida != '0':
+                respostaDica = dicas.compraDicas(dicaEscolhida, paisSorteado, tentativas, letrasUsadas)
+                print(respostaDica[0])
 
-            if dicaEscolhida == '1':
-                coresUsadas.append(respostaDica[0])
-                coresSorteadas = respostaDica[2]
+                if dicaEscolhida == '1':
+                    coresUsadas.append(respostaDica[0])
+                
+                if dicaEscolhida == '2':
+                    letrasUsadas.append(respostaDica[0])
+                    letrasSorteadas = respostaDica[2]
 
-            tentativas -= respostaDica[1]
+                if dicaEscolhida == '3' or dicaEscolhida == '4' or dicaEscolhida == '5':
+                    dicasUsadas.append(dicaEscolhida)
 
-            print('Voce tem {} tentativas restantes!'.format(tentativas))
-            entraPais = input('Escolha mais um pais: ')
+                tentativas -= respostaDica[1]
+                acabouCores = respostaDica[2]
+
+                print('Voce tem {} tentativas restantes!'.format(tentativas))
+                entraPais = input('Escolha mais um pais: ')
+            else:
+                entraPais = input('Escolha mais um pais: ')
         else:
             if entraPais in dic_normalizado.keys():
                 if entraPais not in listaChutes:
