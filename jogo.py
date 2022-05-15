@@ -8,15 +8,19 @@ EARTH_RADIUS = 6371
 tentativas = 20
 listaTentivas = []
 listaChutes = []
-mostraChutes= []
+mostraChutes = []
 continuaJogo = True
+
+vermelho = '\033[31m'
+verde = '\033[32m'
+azul = '\033[34m'
+reset = "\033[0;0m"
 
 coresUsadas = []
 coresSorteadas = []
 
 paisSorteado = sorteia_pais(dic_normalizado)
 entraPais = input('Escolha um pais para comecar: ')
-
 
 while continuaJogo == True:
     while entraPais != paisSorteado:
@@ -53,11 +57,26 @@ while continuaJogo == True:
                         mostraChutes = adiciona_em_ordem(entraPais, dist, mostraChutes)
 
                         print('\nErrou, o pais secreto esta a: {:.2f}'.format(dist))
+
+                        print('\nInformacoes adquiridas: ')
+                        print('--------------------------------- ')
+                        for item in mostraChutes:
+                            if item[1] <= 5000:
+                                print(verde + '{} --> {:.2f}'.format(item[0], item[1]))
+                            if item[1] > 5000 and item[1] <= 12500:
+                                print(azul + '{} --> {:.2f}'.format(item[0], item[1]))
+                            if item[1] > 12500:
+                                print(vermelho + '{} --> {:.2f}'.format(item[0], item[1]))
+                        print(reset + '--------------------------------- ')                    
+
+                        tentativas -= 1
+                        print('\nVoce tem {} tentativas restantes!'.format(tentativas))
+
+                        entraPais = input('Escolha mais um pais: ')
                         
-                            
                     else:
                         print('\nVoce perdeu! o pais secreto era: {0}'.format(paisSorteado))
-
+                        break
 
                 else:
                     print('\nVoce ja chutou esse pais!')
