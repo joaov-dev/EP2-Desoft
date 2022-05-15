@@ -30,8 +30,25 @@ area = ''
 populacao = ''
 continente = ''
 
+print ("   ================================================   ")
+print ("  /                                                \  ")
+print (" /                                                  \ ")
+print ("|                   descubra o país                  |")
+print (" \                                                  / ")
+print ("  \                                                /  ")
+print ("   ================================================   ")
+
+print ("\nComandos: ")
+print ('     dica       - Entra no mercado de dicas' )
+print ('     desisto    - desiste da rodada ')
+print ('     inventário - Exibe sua posição' )
+
+print ('\nVocê tem ' + azul + '20' + reset + ' tentativas')
+       
+
 paisSorteado = sorteia_pais(dic_normalizado)
 entraPais = input('Escolha um pais para comecar: ')
+
 
 while continuaJogo == True:
     while entraPais != paisSorteado:
