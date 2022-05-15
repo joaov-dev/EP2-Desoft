@@ -23,6 +23,13 @@ letrasUsadas = []
 letrasSorteadas = ["vazio"]
 dicasUsadas = []
 
+bandeiraAdquirida = []
+capitalAdquirida = []
+
+area = ''
+populacao = ''
+continente = ''
+
 paisSorteado = sorteia_pais(dic_normalizado)
 entraPais = input('Escolha um pais para comecar: ')
 
@@ -52,22 +59,47 @@ while continuaJogo == True:
             dicaEscolhida = input('Escolha sua opcao [0|1|2|3|4|5]: ')
             if dicaEscolhida != '0':
                 respostaDica = dicas.compraDicas(dicaEscolhida, paisSorteado, tentativas, letrasUsadas)
-                print(respostaDica[0])
+                print("Aqui esta sua resposta: {}".format(respostaDica[0]))
 
                 if dicaEscolhida == '1':
                     coresUsadas.append(respostaDica[0])
+                    bandeiraAdquirida.append(respostaDica[0])
+                    acabouCores = respostaDica[2]
                 
                 if dicaEscolhida == '2':
                     letrasUsadas.append(respostaDica[0])
-                    letrasSorteadas = respostaDica[2]
+                    capitalAdquirida.append(respostaDica[0])
 
-                if dicaEscolhida == '3' or dicaEscolhida == '4' or dicaEscolhida == '5':
+                if dicaEscolhida == '3':
                     dicasUsadas.append(dicaEscolhida)
+                    area = respostaDica[0]
+                if dicaEscolhida == '4':
+                    dicasUsadas.append(dicaEscolhida)
+                    populacao = respostaDica[0]
+                if dicaEscolhida == '5':
+                    dicasUsadas.append(dicaEscolhida)
+                    continente = respostaDica[0]
+
+                print('----------------------------------------')
+                print('Dicas Adquiridas: ')
+                if len(bandeiraAdquirida)>0:
+                    corBandeiraString = ', '.join(bandeiraAdquirida)
+                    print('Cores da Bandeira: {}'.format(corBandeiraString))
+                if len(capitalAdquirida)>0:
+                    capitalString = ', '.join(capitalAdquirida)
+                    print('Letras da capital: {}'.format(capitalString))
+                if area != '':
+                    print('Area do Pais: {}'.format(area))
+                if populacao != '':
+                    print('Populacao do pais: {}'.format(populacao))
+                if continente != '':
+                    print('Continente: {}'.format(continente))
+                print('----------------------------------------')
 
                 tentativas -= respostaDica[1]
-                acabouCores = respostaDica[2]
+                
 
-                print('Voce tem {} tentativas restantes!'.format(tentativas))
+                print('\nVoce tem {} tentativas restantes!'.format(tentativas))
                 entraPais = input('Escolha mais um pais: ')
             else:
                 entraPais = input('Escolha mais um pais: ')
