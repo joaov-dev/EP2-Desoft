@@ -53,22 +53,22 @@ entraPais = input('\nEscolha um pais para comecar: ')
 while continuaJogo == True:
     while entraPais != paisSorteado:
         if len(coresUsadas) == len(coresSorteadas):
-            if '1' not in dicasUsadas:
+            if 1 not in dicasUsadas:
                 dicasUsadas.append('1')
         if len(letrasUsadas) == len(letrasSorteadas):
-            if '2' not in dicasUsadas:
+            if 2 not in dicasUsadas:
                 dicasUsadas.append('2')
         if entraPais == 'dica':
             print('----------------------------------------')
             if acabouCores == False:
                 print('1. Cor da Bandeira  - Custa 4 tentativas')
-            if '2' not in dicasUsadas:
+            if 2 not in dicasUsadas:
                 print('2. Letra da Capital - Custa 3 tentativas')
-            if '3' not in dicasUsadas:
+            if 3 not in dicasUsadas:
                 print('3. Area             - Custa 6 tentativas')
-            if '4' not in dicasUsadas:
+            if 4 not in dicasUsadas:
                 print('4. Populacao        - Custa 5 tentativas')
-            if '5' not in dicasUsadas:
+            if 5 not in dicasUsadas:
                 print('5. Continente       - Custa 7 tentativas')
             print('0. Sem dica')
             print('----------------------------------------')
@@ -128,8 +128,10 @@ while continuaJogo == True:
                 if tentativas <= 5:
                     print('\nVoce tem ' + vermelho + '{}'.format(tentativas)+ reset+ ' tentativas restantes!')
                 entraPais = input('Escolha mais um pais: ')
+                break
             else:
                 entraPais = input('Escolha mais um pais: ')
+                break
         if entraPais == 'inventario':
             print('\n--------------------------------- ')
             print('Informacoes adquiridas: ')
